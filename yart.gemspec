@@ -10,13 +10,15 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Yet Another Ruby Templater is yet another way to turn ruby code into HTML"
   spec.description   = <<~TEXT
-    A Ruby to HTML templater. Can be used stand alone or embedded inside a higher level templater such as erb or slim. Is super good at building the changable bits of a webpage e.g. a form for posting to the server etc.
+    Yet Another Ruby Templater is yet another way to turn ruby code into HTML.
+
+    Can be used stand alone or embedded inside a higher level templater such as erb or slim. Is super good at building the changable bits of a webpage e.g. a form for posting to the server etc.
   TEXT
   spec.homepage      = "https://github.com/michaeltelford/yart"
   spec.license       = "MIT"
 
   spec.platform              = Gem::Platform::RUBY
-  spec.required_ruby_version = "~> 3.0"
+  spec.required_ruby_version = "~> 2.7"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
   spec.metadata["homepage_uri"] = spec.homepage

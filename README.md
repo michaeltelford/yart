@@ -1,6 +1,8 @@
 # YART
 
-*Yet Another Ruby Templater* is yet another way to turn ruby code into HTML. Can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`. Is super good at building the changable bits of a webpage e.g. a form for posting to the server etc.
+*Yet Another Ruby Templater* is yet another way to turn ruby code into HTML.
+
+Can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`. Is super good at building the changable bits of a webpage e.g. a form for posting to the server etc.
 
 ## Usage
 

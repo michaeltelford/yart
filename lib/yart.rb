@@ -2,7 +2,7 @@
 
 require_relative "yart/version"
 
-module Yart
+module YART
   class Error < StandardError; end
   # Your code goes here...
 end

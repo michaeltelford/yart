@@ -1,28 +1,42 @@
-# Yart
+# YART
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/yart`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'yart'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install yart
+*Yet Another Ruby Templater* is yet another way to turn ruby code into HTML. Can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`. Is super good at building the changable bits of a webpage e.g. a form for posting to the server etc.
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'yart'
+
+YART.parse do
+    h1(id: :title) { 'YART' }
+    div do
+        h2 { 'Yet Another Ruby Templater' }
+        p(class: [:content, :italic]) { 'Possibly the simplest way to turn sexy Ruby into boring HTML' }
+        text { 'Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww' }
+    end
+end
+```
+
+Which produces and returns (from `YART.parse`):
+
+```html
+<h1 id='title'>YART</h1>
+<div>
+    <h2>Yet Another Ruby Templater</h2>
+    <p class='content italic'>Possibly the simplest way to turn sexy Ruby into boring HTML</p>
+    Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww
+</div>
+```
+
+## Installation
+
+### Ruby Gems
+
+    $ gem install yart
+
+### Bundler
+
+    $ bundle add yart
 
 ## Development
 
@@ -32,7 +46,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/yart. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/yart/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/michaeltelford/yart. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/michaeltelford/yart/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -40,4 +54,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Yart project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/yart/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the YART project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/michaeltelford/yart/blob/master/CODE_OF_CONDUCT.md).

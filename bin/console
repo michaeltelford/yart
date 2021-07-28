@@ -2,14 +2,19 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "yart"
-
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
-
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
-
 require "irb"
+require 'byebug' # Call 'byebug' anywhere in the code to debug.
+
+# Define a method to facilitate the reloading of code changes.
+def reload
+  original_verbose = $VERBOSE
+  $VERBOSE = nil              # Suppress warning messages (from reloading CONSTANTS).
+  load 'load.rb'              # (Re)load all code changes.
+  $VERBOSE = original_verbose # Activate warning messages again globally.
+  true
+end
+
+# Load the most recent code into the session and include modules etc.
+reload
+
 IRB.start(__FILE__)

@@ -32,7 +32,7 @@ Which produces and returns (from `YART.parse`):
 
 ## Installation
 
-### Ruby Gems
+### RubyGems
 
     $ gem install yart
 

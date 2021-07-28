@@ -17,4 +17,17 @@ end
 # Load the most recent code into the session and include modules etc.
 reload
 
+# Load any fixture data into the session.
+def sample
+  proc do
+    h1(id: :title) { 'YART' }
+    div do
+        h2 { 'Yet Another Ruby Templater' }
+        p(class: [:content, :italic]) { 'Possibly the simplest way to turn sexy Ruby into boring HTML' }
+        text { 'Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww' }
+    end
+    footer
+  end
+end
+
 IRB.start(__FILE__)

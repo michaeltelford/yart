@@ -16,6 +16,7 @@ YART.parse do
         p(class: [:content, :italic]) { 'Possibly the simplest way to turn sexy Ruby into boring HTML' }
         text { 'Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww' }
     end
+    footer
 end
 ```
 
@@ -28,6 +29,7 @@ Which produces and returns (from `YART.parse`):
     <p class='content italic'>Possibly the simplest way to turn sexy Ruby into boring HTML</p>
     Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww
 </div>
+<footer></footer>
 ```
 
 ## Installation

@@ -3,13 +3,13 @@
 
 require "bundler/setup"
 require "irb"
-require 'byebug' # Call 'byebug' anywhere in the code to debug.
+require "byebug" # Call "byebug" anywhere in the code to debug.
 
 # Define a method to facilitate the reloading of code changes.
 def reload
   original_verbose = $VERBOSE
   $VERBOSE = nil              # Suppress warning messages (from reloading CONSTANTS).
-  load 'load.rb'              # (Re)load all code changes.
+  load "load.rb"              # (Re)load all code changes.
   $VERBOSE = original_verbose # Activate warning messages again globally.
   true
 end
@@ -20,11 +20,11 @@ reload
 # Load any fixture data into the session.
 def sample
   proc do
-    h1(id: :title) { 'YART' }
-    div do
-        h2 { 'Yet Another Ruby Templater' }
-        p(class: [:content, :italic]) { 'Possibly the simplest way to turn sexy Ruby into boring HTML' }
-        text { 'Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww' }
+    h1(id: :title) { "YART" }
+    div(data_test_id: "Crazy88s") do
+        h2 { "Yet Another Ruby Templater" }
+        p(class: [:content, :italic_text]) { "Possibly the simplest way to turn sexy Ruby into boring HTML" }
+        text { "Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww" }
     end
     footer
   end

@@ -7,14 +7,14 @@ Can be used stand alone or embedded inside a higher level templater such as `erb
 ## Usage
 
 ```ruby
-require 'yart'
+require "yart"
 
 YART.parse do
-    h1(id: :title) { 'YART' }
-    div do
-        h2 { 'Yet Another Ruby Templater' }
-        p(class: [:content, :italic]) { 'Possibly the simplest way to turn sexy Ruby into boring HTML' }
-        text { 'Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww' }
+    h1(id: :title) { "YART" }
+    div(data_test_id: "Crazy88s") do
+        h2 { "Yet Another Ruby Templater" }
+        p(class: [:content, :italic_text]) { "Possibly the simplest way to turn sexy Ruby into boring HTML" }
+        text { "Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww" }
     end
     footer
 end
@@ -24,9 +24,9 @@ Which produces and returns (from `YART.parse`):
 
 ```html
 <h1 id='title'>YART</h1>
-<div>
+<div data-test-id='Crazy88s'>
     <h2>Yet Another Ruby Templater</h2>
-    <p class='content italic'>Possibly the simplest way to turn sexy Ruby into boring HTML</p>
+    <p class='content italic-text'>Possibly the simplest way to turn sexy Ruby into boring HTML</p>
     Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww
 </div>
 <footer></footer>

@@ -20,14 +20,21 @@ reload
 # Load any fixture data into the session.
 def sample
   proc do
-    h1(id: :title) { "YART" }
-    div data_test_id: "The Crazy 88's" do
-        h2 { "Yet Another Ruby Templater" }
-        p(class: [:content, :italic_text]) { "Possibly the simplest way to turn sexy Ruby into boring HTML" }
-        text { "Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww" }
-        element("CustomElement", id: :custom_element) { "Some random text inside a custom element" }
+    html do
+      head # Render an empty <head></head> element
+      body do
+        h1 { "Use a block to return a String of innerText or more elements" }
+        div data_test_id: "String attribute values will be parsed as is" do
+            h2(data_x: :sub_heading) { "Symbol attribute keys/values will be kebab-cased" }
+            p(class: [:content, :italic_text], id: :paragraph) do
+              "You can pass an array of attribute values and they will be space separated"
+            end
+            text { "Set the div's innerText before and after its child elements" }
+            element("CustomElement", id: :custom_element) { "Render the raw element (case insensitive)" }
+        end
+        footer
+      end
     end
-    footer
   end
 end
 

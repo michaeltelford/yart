@@ -1,36 +1,38 @@
 # YART
 
-*Yet Another Ruby Templater* is yet another way to turn ruby code into HTML.
+*Yet Another Ruby Templater* is yet another way to turn plain Ruby into HTML.
 
-Can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`. Is super good at building the changable bits of a webpage e.g. a form for posting to the server etc.
+Can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`. Makes building the changable bits of a webpage super easy and intuitive e.g. a form for posting to the server.
 
-## Usage
+- YART provides an intuitive DSL that feels natural to use and removes the boiler plate from writing HTML
+- YART has zero runtime dependencies and ~100 LOC
+- YART is fully unit tested
+
+## Example Usage
 
 ```ruby
 require "yart"
 
 YART.parse do
-    h1(id: :title) { "YART" }
-    div(data_test_id: "Crazy88s") do
-        h2 { "Yet Another Ruby Templater" }
-        p(class: [:content, :italic_text]) { "Possibly the simplest way to turn sexy Ruby into boring HTML" }
-        text { "Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww" }
-    end
-    footer
+  form action: "/auth" do
+    input type: :email, id: :email, placeholder: "Email Address"
+    input type: :password, id: :password, placeholder: "Password"
+    button(type: :submit) { "Login" }
+  end
 end
 ```
 
-Which produces and returns (from `YART.parse`):
+Which generates:
 
 ```html
-<h1 id='title'>YART</h1>
-<div data-test-id='Crazy88s'>
-    <h2>Yet Another Ruby Templater</h2>
-    <p class='content italic-text'>Possibly the simplest way to turn sexy Ruby into boring HTML</p>
-    Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww
-</div>
-<footer></footer>
+<form action='/auth'>
+  <input type='email' id='email' placeholder='Email Address'></input>
+  <input type='password' id='password' placeholder='Password'></input>
+  <button type='submit'>Login</button>
+</form>
 ```
+
+Note that the above HTML snippet is *prettified* for demonstration. The actual generated HTML will be *minified*.
 
 ## Installation
 
@@ -41,6 +43,52 @@ Which produces and returns (from `YART.parse`):
 ### Bundler
 
     $ bundle add yart
+
+## API
+
+The best way to fully demonstrate the YART API is with a more complex example:
+
+```ruby
+require 'yart'
+
+YART.parse do
+  html do
+    head # Render an empty <head></head> element
+    body do
+      h1 { "Use a block to return a String of innerText or more elements" }
+      div data_test_id: "String attribute values will be parsed as is" do
+        h2(data_x: :sub_heading) { "Symbol attribute keys/values will be kebab-cased" }
+        p(class: [:content, :italic_text], id: :paragraph) do
+          "You can pass an array of attribute values and they will be space separated"
+        end
+        text { "Set the div's innerText before and after its child elements" }
+        element("CustomElement", id: :custom_element) { "Render the raw element (case insensitive)" }
+      end
+      footer
+    end
+  end
+end
+```
+
+Which generates, minifies and returns the following HTML from `YART.parse`:
+
+```html
+<html>
+  <head></head>
+  <body>
+    <h1>Use a block to return a String of innerText or more elements</h1>
+    <div data-test-id='String attribute values will be parsed as is'>
+      <h2 data-x='sub-heading'>Symbol attribute keys/values will be kebab-cased</h2>
+      <p class='content italic-text' id='paragraph'>
+        You can pass an array of attribute values and they will be space separated
+      </p>
+      Set the div's innerText before and after its child elements
+      <CustomElement id='custom-element'>Render the raw element (case insensitive)</CustomElement>
+    </div>
+    <footer></footer>
+  </body>
+</html>
+```
 
 ## Development
 

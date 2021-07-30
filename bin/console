@@ -21,10 +21,11 @@ reload
 def sample
   proc do
     h1(id: :title) { "YART" }
-    div(data_test_id: "Crazy88s") do
+    div data_test_id: "The Crazy 88's" do
         h2 { "Yet Another Ruby Templater" }
         p(class: [:content, :italic_text]) { "Possibly the simplest way to turn sexy Ruby into boring HTML" }
         text { "Ruby ruby ruby ruby aaaaahhhhhhawwwwwwwww" }
+        element("CustomElement", id: :custom_element) { "Some random text inside a custom element" }
     end
     footer
   end

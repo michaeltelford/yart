@@ -3,7 +3,7 @@
 *Yet Another Ruby Templater* turns plain Ruby into HTML making it fun to write webpages.
 
 - YART provides an intuitive DSL that feels natural to use and removes the boiler plate from writing HTML
-- YART has zero runtime dependencies and ~100 LOC
+- YART has zero runtime dependencies and ~120 LOC
 - YART is fully unit tested
 
 ## Example Usage
@@ -110,6 +110,7 @@ Main points to note:
 - An attribute *value* of `true` renders the attribute key without a value e.g. `input required: true` renders `<input required>`.
 - Several attibute *values* can be rendered by passing an `Array` e.g. `p class: [:para, :italic]`. The values will be rendered space separated.
 - The attribute `close: true` is special and tells the parser to auto-close the element (because it's empty).
+- Use the convenience methods `doctype`, `script` and `stylesheet` as needed.
 
 ## Development
 

@@ -29,6 +29,22 @@ module YART::Parser
     element("!DOCTYPE", html: true, close: true)
   end
 
+  # Renders a JS <script src="..."> element, for convenience.
+  def script(src)
+    raise "Must pass a String param or a block returning a String" unless src || block_given?
+
+    src ||= block.call
+    element("script", src: src, close: true)
+  end
+
+  # Renders a CSS <link href="..."> element, for convenience.
+  def stylesheet(href)
+    raise "Must pass a String param or a block returning a String" unless href || block_given?
+
+    href ||= block.call
+    element("link", href: href, rel: :stylesheet, type: "text/css", close: true)
+  end
+
   # Overrides Ruby's `p` method to render the element instead of printing.
   def p(**attributes, &block)
     render("p", attributes, &block)

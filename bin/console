@@ -20,19 +20,21 @@ reload
 # Load any fixture data into the session.
 def sample
   proc do
-    html do
-      head # Render an empty <head></head> element
+    element "!DOCTYPE", html: true, close: true
+    html lang: :en do
+      head do
+        title { "YART API" }
+      end
       body do
         h1 { "Use a block to return a String of innerText or more elements" }
         div data_test_id: "String attribute values will be parsed as is" do
-            h2(data_x: :sub_heading) { "Symbol attribute keys/values will be kebab-cased" }
-            p(class: [:content, :italic_text], id: :paragraph) do
-              "You can pass an array of attribute values and they will be space separated"
-            end
-            text { "Set the div's innerText before and after its child elements" }
-            element("CustomElement", id: :custom_element) { "Render the raw element (case insensitive)" }
+          h2(data_x: :sub_heading) { "Symbol attribute keys/values will be kebab-cased" }
+          text { "Set the div's innerText before and after its child elements" }
+          p(class: [:content, :italic_text], id: :paragraph) do
+            "You can pass an array of attribute values and they will be space separated"
+          end
         end
-        footer
+        footer # Render an empty <footer></footer> element
       end
     end
   end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module YART::Parser
+  CUSTOM_ATTRIBUTES = [:close]
+
   # Parses a block of Ruby, generating HTML.
   def parse(&block)
     raise "Must pass a block to parse" unless block_given?
@@ -10,7 +12,7 @@ module YART::Parser
     @@yart_buffer.join
   end
 
-  # Allows elements to be called and rendered.
+  # Allows elements to be called and rendered as a DSL.
   def method_missing(m, *args, &block)
     attributes = args.fetch(0, {})
 
@@ -46,21 +48,23 @@ module YART::Parser
 
     buffer(build_opening_tag(element, attributes))
     buffer(instance_eval(&block)) if block_given?
-    buffer(build_closing_tag(element))
+    buffer(build_closing_tag(element, attributes))
   end
 
   def build_opening_tag(element, attributes)
     attributes = convert_attributes(attributes)
     html_attributes = attributes
-      .map {|k, v| "#{k}='#{v}'" }
+      .reject { |k, v| CUSTOM_ATTRIBUTES.include?(k) }
+      .map { |k, v| "#{k}='#{v}'" }
       .join(" ")
     separator = html_attributes.empty? ? "" : " "
+    close = attributes[:close] ? " />" : ">"
 
-    "<#{element}#{separator}#{html_attributes}>"
+    "<#{element}#{separator}#{html_attributes}#{close}"
   end
 
-  def build_closing_tag(element)
-    "</#{element}>"
+  def build_closing_tag(element, attributes)
+    attributes[:close] ? "" : "</#{element}>"
   end
 
   def convert_attributes(attributes)

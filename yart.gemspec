@@ -8,11 +8,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Michael Telford"]
   spec.email         = ["michael.telford@live.com"]
 
-  spec.summary       = "Yet Another Ruby Templater is yet another way to turn ruby code into HTML"
+  spec.summary       = "Yet Another Ruby Templater (YART) turns plain Ruby into HTML making it fun to write webpages."
   spec.description   = <<~TEXT
-    Yet Another Ruby Templater is yet another way to turn ruby code into HTML.
+    YART makes building the changable bits of a webpage super easy and intuitive e.g. a form for posting to the server.
 
-    Can be used stand alone or embedded inside a higher level templater such as erb or slim. Is super good at building the changable bits of a webpage e.g. a form for posting to the server etc.
+    - YART provides an intuitive DSL that feels natural to use and removes the boiler plate from writing HTML
+    - YART can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`
+    - YART has zero runtime dependencies and ~100 LOC
+    - YART is fully unit tested
   TEXT
   spec.homepage      = "https://github.com/michaeltelford/yart"
   spec.license       = "MIT"

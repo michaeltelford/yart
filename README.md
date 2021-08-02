@@ -2,22 +2,25 @@
 
 *Yet Another Ruby Templater* is yet another way to turn plain Ruby into HTML.
 
-Can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`. Makes building the changable bits of a webpage super easy and intuitive e.g. a form for posting to the server.
+Makes building the changable bits of a webpage super easy and intuitive e.g. a form for posting to the server.
 
 - YART provides an intuitive DSL that feels natural to use and removes the boiler plate from writing HTML
+- YART can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`
 - YART has zero runtime dependencies and ~100 LOC
 - YART is fully unit tested
 
 ## Example Usage
+
+> login.html
 
 ```ruby
 require "yart"
 
 YART.parse do
   form action: "/auth" do
-    input type: :email, id: :email, placeholder: "Email Address"
-    input type: :password, id: :password, placeholder: "Password"
-    button(type: :submit) { "Login" }
+    input type: :email, placeholder: "Email Address", required: true, close: true
+    input type: :password, placeholder: "Password", required: true, close: true
+    button(type: :submit, id: :login) { "Login" }
   end
 end
 ```
@@ -26,9 +29,9 @@ Which generates:
 
 ```html
 <form action='/auth'>
-  <input type='email' id='email' placeholder='Email Address'></input>
-  <input type='password' id='password' placeholder='Password'></input>
-  <button type='submit'>Login</button>
+  <input type='email' placeholder='Email Address' required>
+  <input type='password' placeholder='Password' required>
+  <button type='submit' id='login'>Login</button>
 </form>
 ```
 
@@ -52,43 +55,51 @@ The best way to fully demonstrate the YART API is with a more complex example:
 require 'yart'
 
 YART.parse do
-  html do
-    head # Render an empty <head></head> element
+  element "!DOCTYPE", html: true, close: true # AKA `doctype`
+  html lang: :en do
+    head do
+      title { "YART API" }
+    end
     body do
       h1 { "Use a block to return a String of innerText or more elements" }
       div data_test_id: "String attribute values will be parsed as is" do
         h2(data_x: :sub_heading) { "Symbol attribute keys/values will be kebab-cased" }
+        text { "Set the div's innerText, before and after its child elements" }
         p(class: [:content, :italic_text], id: :paragraph) do
           "You can pass an array of attribute values and they will be space separated"
         end
-        text { "Set the div's innerText before and after its child elements" }
-        element("CustomElement", id: :custom_element) { "Render the raw element (case insensitive)" }
       end
-      footer
+      footer # Render an empty <footer></footer> element
     end
   end
 end
 ```
 
-Which generates, minifies and returns the following HTML from `YART.parse`:
+Which generates, minifies and returns the following HTML5 from `YART.parse`:
 
 ```html
-<html>
-  <head></head>
-  <body>
-    <h1>Use a block to return a String of innerText or more elements</h1>
-    <div data-test-id='String attribute values will be parsed as is'>
-      <h2 data-x='sub-heading'>Symbol attribute keys/values will be kebab-cased</h2>
-      <p class='content italic-text' id='paragraph'>
-        You can pass an array of attribute values and they will be space separated
-      </p>
-      Set the div's innerText before and after its child elements
-      <CustomElement id='custom-element'>Render the raw element (case insensitive)</CustomElement>
-    </div>
-    <footer></footer>
-  </body>
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <title>YART API</title>
+</head>
+<body>
+  <h1>Use a block to return a String of innerText or more elements</h1>
+  <div data-test-id='String attribute values will be parsed as is'>
+    <h2 data-x='sub-heading'>Symbol attribute keys/values will be kebab-cased</h2>
+    Set the div's innerText before and after its child elements
+    <p class='content italic-text' id='paragraph'>
+      You can pass an array of attribute values and they will be space separated
+    </p>
+  </div>
+  <footer></footer>
+</body>
 </html>
 ```
+
+Let's look into what's happening under the hood in more detail:
+
+`TODO`
 
 ## Development
 

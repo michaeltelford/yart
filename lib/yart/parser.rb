@@ -24,6 +24,11 @@ module YART::Parser
     render(name, attributes, &block)
   end
 
+  # Renders a <!DOCTYPE html> element, for convenience.
+  def doctype
+    element("!DOCTYPE", html: true, close: true)
+  end
+
   # Overrides Ruby's p method to render the element instead of printing.
   def p(**attributes, &block)
     render("p", attributes, &block)
@@ -52,22 +57,20 @@ module YART::Parser
   end
 
   def build_opening_tag(element, attributes)
-    attributes = convert_attributes(attributes)
-    html_attributes = attributes
+    html_attributes = sanitise_attributes(attributes)
       .reject { |k, v| CUSTOM_ATTRIBUTES.include?(k) }
-      .map { |k, v| "#{k}='#{v}'" }
+      .map { |k, v| v == true ? k.to_s : "#{k}='#{v}'" }
       .join(" ")
     separator = html_attributes.empty? ? "" : " "
-    close = attributes[:close] ? " />" : ">"
 
-    "<#{element}#{separator}#{html_attributes}#{close}"
+    "<#{element}#{separator}#{html_attributes}>"
   end
 
   def build_closing_tag(element, attributes)
     attributes[:close] ? "" : "</#{element}>"
   end
 
-  def convert_attributes(attributes)
+  def sanitise_attributes(attributes)
     attributes.map do |k, v|
       k = kebab_case(k)
       v = v.respond_to?(:map) ?

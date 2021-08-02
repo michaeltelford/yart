@@ -10,10 +10,9 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Yet Another Ruby Templater (YART) turns plain Ruby into HTML making it fun to write webpages."
   spec.description   = <<~TEXT
-    YART makes building the changable bits of a webpage super easy and intuitive e.g. a form for posting to the server.
+    Yet Another Ruby Templater (YART) turns plain Ruby into HTML making it fun to write webpages.
 
     - YART provides an intuitive DSL that feels natural to use and removes the boiler plate from writing HTML
-    - YART can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`
     - YART has zero runtime dependencies and ~100 LOC
     - YART is fully unit tested
   TEXT

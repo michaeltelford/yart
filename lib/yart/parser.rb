@@ -3,7 +3,7 @@
 module YART::Parser
   CUSTOM_ATTRIBUTES = [:close]
 
-  # Parses a block of Ruby, generating HTML.
+  # Parses a block of Ruby, rendering and returning a HTML String.
   def parse(&block)
     raise "Must pass a block to parse" unless block_given?
 
@@ -12,7 +12,7 @@ module YART::Parser
     @@yart_buffer.join
   end
 
-  # Allows elements to be called and rendered as a DSL.
+  # Allows elements to be called and rendered via a DSL.
   def method_missing(m, *args, &block)
     attributes = args.fetch(0, {})
 
@@ -29,12 +29,12 @@ module YART::Parser
     element("!DOCTYPE", html: true, close: true)
   end
 
-  # Overrides Ruby's p method to render the element instead of printing.
+  # Overrides Ruby's `p` method to render the element instead of printing.
   def p(**attributes, &block)
     render("p", attributes, &block)
   end
 
-  # Sets the innerText of the element being rendered.
+  # Sets the `innerText` of the element being rendered.
   def text(str = nil, &block)
     raise "Must pass a String param or a block returning a String" unless str || block_given?
 
@@ -57,13 +57,13 @@ module YART::Parser
   end
 
   def build_opening_tag(element, attributes)
-    html_attributes = sanitise_attributes(attributes)
+    attributes_str = sanitise_attributes(attributes)
       .reject { |k, v| CUSTOM_ATTRIBUTES.include?(k) }
       .map { |k, v| v == true ? k.to_s : "#{k}='#{v}'" }
       .join(" ")
-    separator = html_attributes.empty? ? "" : " "
+    separator = attributes_str.empty? ? "" : " "
 
-    "<#{element}#{separator}#{html_attributes}>"
+    "<#{element}#{separator}#{attributes_str}>"
   end
 
   def build_closing_tag(element, attributes)

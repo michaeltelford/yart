@@ -1,11 +1,8 @@
 # YART
 
-*Yet Another Ruby Templater* is yet another way to turn plain Ruby into HTML.
-
-Makes building the changable bits of a webpage super easy and intuitive e.g. a form for posting to the server.
+*Yet Another Ruby Templater* turns plain Ruby into HTML making it fun to write webpages.
 
 - YART provides an intuitive DSL that feels natural to use and removes the boiler plate from writing HTML
-- YART can be used stand alone or embedded inside a higher level templater such as `erb` or `slim`
 - YART has zero runtime dependencies and ~100 LOC
 - YART is fully unit tested
 
@@ -25,7 +22,7 @@ YART.parse do
 end
 ```
 
-Which generates:
+Which renders:
 
 ```html
 <form action='/auth'>
@@ -38,6 +35,8 @@ Which generates:
 Note that the above HTML snippet is *prettified* for demonstration. The actual generated HTML will be *minified*.
 
 ## Installation
+
+Requires Ruby `>= 2.7`
 
 ### RubyGems
 
@@ -55,7 +54,7 @@ The best way to fully demonstrate the YART API is with a more complex example:
 require 'yart'
 
 YART.parse do
-  element "!DOCTYPE", html: true, close: true # AKA `doctype`
+  element "!DOCTYPE", html: true, close: true # Or just call `doctype`
   html lang: :en do
     head do
       title { "YART API" }
@@ -64,7 +63,7 @@ YART.parse do
       h1 { "Use a block to return a String of innerText or more elements" }
       div data_test_id: "String attribute values will be parsed as is" do
         h2(data_x: :sub_heading) { "Symbol attribute keys/values will be kebab-cased" }
-        text { "Set the div's innerText, before and after its child elements" }
+        text { "Set the div's innerText, before and/or after its child elements" }
         p(class: [:content, :italic_text], id: :paragraph) do
           "You can pass an array of attribute values and they will be space separated"
         end
@@ -75,7 +74,7 @@ YART.parse do
 end
 ```
 
-Which generates, minifies and returns the following HTML5 from `YART.parse`:
+Which renders, minifies and returns the following HTML5 from `YART.parse`:
 
 ```html
 <!DOCTYPE html>
@@ -87,7 +86,7 @@ Which generates, minifies and returns the following HTML5 from `YART.parse`:
   <h1>Use a block to return a String of innerText or more elements</h1>
   <div data-test-id='String attribute values will be parsed as is'>
     <h2 data-x='sub-heading'>Symbol attribute keys/values will be kebab-cased</h2>
-    Set the div's innerText before and after its child elements
+    Set the div's innerText, before and/or after its child elements
     <p class='content italic-text' id='paragraph'>
       You can pass an array of attribute values and they will be space separated
     </p>
@@ -97,9 +96,20 @@ Which generates, minifies and returns the following HTML5 from `YART.parse`:
 </html>
 ```
 
-Let's look into what's happening under the hood in more detail:
+Main points to note:
 
-`TODO`
+- Create the HTML document hierarchy using element calls and blocks.
+- Call the element as it's named in HTML, e.g. `h1`, `div`, `p` etc. This works as long as it's lowercase.
+- Call `element` when you need to render the *raw* element name (case insensitive) e.g. `!DOCTYPE`.
+- Pass the element's attributes as a `Hash` argument.
+- Pass a block to return a `String` of `innerText` or more DSL calls (which will eventually return a `String`).
+- An element doesn't have to have attributes or even a block. Where a block is absent, an empty element will be rendered.
+- Use the `text` method to render the `innerText` of the element when it consists of *both* inner text *and* child elements.
+- An attribute key or value of type `Symbol` will be parsed, converting `snake_case` to `kebab-case`.
+- An attribute *value* of type `String` will be parsed as is (not modified in any way).
+- An attribute *value* of `true` renders the attribute key without a value e.g. `input required: true` renders `<input required>`.
+- Several attibute *values* can be rendered by passing an `Array` e.g. `p class: [:para, :italic]`. The values will be rendered space separated.
+- The attribute `close: true` is special and tells the parser to auto-close the element (because it's empty).
 
 ## Development
 

@@ -30,7 +30,7 @@ module YART::Parser
   end
 
   # Renders a JS <script src="..."> element, for convenience.
-  def script(src)
+  def script(src = nil, &block)
     raise "Must pass a String param or a block returning a String" unless src || block_given?
 
     src ||= block.call
@@ -38,7 +38,7 @@ module YART::Parser
   end
 
   # Renders a CSS <link href="..."> element, for convenience.
-  def stylesheet(href)
+  def stylesheet(href = nil, &block)
     raise "Must pass a String param or a block returning a String" unless href || block_given?
 
     href ||= block.call
@@ -107,7 +107,10 @@ module YART::Parser
   def kebab_case(s)
     return s unless s.is_a?(Symbol)
 
-    s.to_s.gsub("_", "-").to_sym
+    s
+      .to_s
+      .gsub("_", "-")
+      .to_sym
   end
 
   def replace_illegal_chars(s)

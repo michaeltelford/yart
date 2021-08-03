@@ -98,17 +98,19 @@ Which renders, minifies and returns the following HTML5 from `YART.parse`:
 
 Main points to note:
 
+- Pass a block to `YART.parse` and it will render and return a HTML `String`.
 - Create the HTML document hierarchy using element calls and blocks.
 - Call the element as it's named in HTML, e.g. `h1`, `div`, `p` etc. This works as long as it's lowercase.
 - Call `element` when you need to render the *raw* element name (case insensitive) e.g. `!DOCTYPE`.
 - Pass the element's attributes as a `Hash` argument.
 - Pass a block to return a `String` of `innerText` or more DSL calls (which will eventually return a `String`).
-- An element doesn't have to have attributes or even a block. Where a block is absent, an empty element will be rendered.
+- An element doesn't require attributes or even a block. Where a block is absent, an empty element will be rendered.
 - Use the `text` method to render the `innerText` of the element when it consists of *both* inner text *and* child elements.
 - An attribute key or value of type `Symbol` will be parsed, converting `snake_case` to `kebab-case`.
 - An attribute *value* of type `String` will be parsed as is (not modified in any way).
 - An attribute *value* of `true` renders the attribute key without a value e.g. `input required: true` renders `<input required>`.
 - Several attibute *values* can be rendered by passing an `Array` e.g. `p class: [:para, :italic]`. The values will be rendered space separated.
+- Attribute *values* containing illegal characters (like quotes etc.) will be escaped in the rendered HTML.
 - The attribute `close: true` is special and tells the parser to auto-close the element (because it's empty).
 - Use the convenience methods `doctype`, `script` and `stylesheet` as needed.
 

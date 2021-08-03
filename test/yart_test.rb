@@ -39,7 +39,7 @@ class YartTest < Minitest::Test
           div data_test_id: "String attribute values will be parsed as is" do
             h2(data_x: :sub_heading) { "Symbol attribute keys/values will be kebab-cased" }
             text { "Set the div's innerText, before and/or after its child elements" }
-            p(class: [:content, :italic_text], id: :paragraph) do
+            p(class: %i[content italic_text], id: :paragraph) do
               "You can pass an array of attribute values and they will be space separated"
             end
           end

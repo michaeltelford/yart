@@ -3,7 +3,7 @@
 *Yet Another Ruby Templater* turns plain Ruby into HTML making it fun to write webpages.
 
 - YART provides an intuitive DSL that feels natural to use and removes the boiler plate from writing HTML
-- YART has zero runtime dependencies and ~120 LOC
+- YART has zero runtime dependencies and around 100 lines of code
 - YART is fully unit tested
 
 ## Example Usage

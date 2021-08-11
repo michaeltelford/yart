@@ -3,7 +3,7 @@
 *Yet Another Ruby Templater* turns plain Ruby into HTML making it fun to write webpages.
 
 - YART provides an intuitive DSL that feels natural to use and removes the boiler plate from writing HTML
-- YART has zero runtime dependencies and around 100 lines of code
+- YART has zero runtime dependencies and around 120 lines of code
 - YART is fully unit tested
 
 ## Example Usage
@@ -113,6 +113,10 @@ Main points to note:
 - Attribute *values* containing illegal characters (like quotes etc.) will be escaped in the rendered HTML.
 - The attribute `close: true` is special and tells the parser to auto-close the element (because it's empty).
 - Use the convenience methods `doctype`, `javascript`, `stylesheet` and `br` as needed.
+
+## Markdown
+
+If you're creating a site with a lot of static textual content, check out the [static_site_builder](https://github.com/michaeltelford/static_site_builder) gem. It can render HTML sites built using Markdown and it fully supports YART; meaning you can write your text in Markdown and your forms etc in YART, never needing to touch HTML.
 
 ## Development
 

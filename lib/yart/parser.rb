@@ -17,12 +17,20 @@ module YART
     def method_missing(m, *args, &block)
       attributes = args.fetch(0, {})
 
-      render(m, attributes, &block)
+      element(m, **attributes, &block)
     end
 
     # Renders an element with the raw name (case insensitive).
     def element(name, **attributes, &block)
       render(name, attributes, &block)
+    end
+
+    # Sets the `innerText` of the element being rendered.
+    def text(str = nil, &block)
+      raise "Must pass a String param or a block returning a String" unless str || block_given?
+
+      str ||= block.call
+      buffer(str)
     end
 
     # Renders a <!DOCTYPE html> element, for convenience.
@@ -31,7 +39,7 @@ module YART
     end
 
     # Renders a JS <script src="..."> element, for convenience.
-    def script(src = nil, &block)
+    def javascript(src = nil, &block)
       raise "Must pass a String param or a block returning a String" unless src || block_given?
 
       src ||= block.call
@@ -46,17 +54,14 @@ module YART
       element("link", href: href, rel: :stylesheet, type: "text/css", close: true)
     end
 
-    # Overrides Ruby's `p` method to render the element instead of printing.
-    def p(**attributes, &block)
-      render("p", attributes, &block)
+    def br(**attributes, &block)
+      attributes[:close] = true unless attributes[:close] == false
+      element("br", **attributes, &block)
     end
 
-    # Sets the `innerText` of the element being rendered.
-    def text(str = nil, &block)
-      raise "Must pass a String param or a block returning a String" unless str || block_given?
-
-      str ||= block.call
-      buffer(str)
+    # Overrides Ruby's `p` method to render the element instead of printing.
+    def p(**attributes, &block)
+      element("p", **attributes, &block)
     end
 
     private
@@ -67,6 +72,9 @@ module YART
 
     def render(element, attributes, &block)
       raise "Must pass attributes as a Hash" unless attributes.is_a?(Hash)
+      if block_given? && attributes.fetch(:close, false)
+        raise "Block and 'close: true' are mutually exclusive"
+      end
 
       buffer(build_opening_tag(element, attributes))
       buffer(instance_eval(&block)) if block_given?

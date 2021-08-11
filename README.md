@@ -112,7 +112,7 @@ Main points to note:
 - Several attibute *values* can be rendered by passing an `Array` e.g. `p class: [:para, :italic]`. The values will be rendered space separated.
 - Attribute *values* containing illegal characters (like quotes etc.) will be escaped in the rendered HTML.
 - The attribute `close: true` is special and tells the parser to auto-close the element (because it's empty).
-- Use the convenience methods `doctype`, `script` and `stylesheet` as needed.
+- Use the convenience methods `doctype`, `javascript`, `stylesheet` and `br` as needed.
 
 ## Development
 

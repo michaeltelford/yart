@@ -69,6 +69,14 @@ class YartTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_block_and_close_true
+    assert_raises StandardError do
+      YART.parse do
+        div(close: true) { "Hello world" }
+      end
+    end
+  end
+
   def test_text__param
     actual = YART.parse do
       div do
@@ -114,7 +122,7 @@ class YartTest < Minitest::Test
 
   def test_script__block
     actual = YART.parse do
-      script { "http://example.com/main.js" }
+      javascript { "http://example.com/main.js" }
     end
     expected = "<script src='http://example.com/main.js'>"
 
@@ -122,7 +130,7 @@ class YartTest < Minitest::Test
   end
 
   def test_script__param
-    actual = YART.parse { script "http://example.com/main.js" }
+    actual = YART.parse { javascript "http://example.com/main.js" }
     expected = "<script src='http://example.com/main.js'>"
 
     assert_equal expected, actual
@@ -142,5 +150,15 @@ class YartTest < Minitest::Test
     expected = "<link href='http://example.com/main.css' rel='stylesheet' type='text/css'>"
 
     assert_equal expected, actual
+  end
+
+  def test_br
+    assert_equal("<br>", YART.parse { br })
+    assert_equal("<br>", YART.parse { br close: true })
+    assert_equal("<br></br>", YART.parse { br close: false })
+  end
+
+  def test_p
+    assert_equal("<p>Hello world</p>", YART.parse { p { "Hello world" } })
   end
 end
